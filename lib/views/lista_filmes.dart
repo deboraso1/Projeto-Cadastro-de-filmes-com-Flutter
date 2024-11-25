@@ -12,26 +12,26 @@ class ListaFilmesScreen extends StatefulWidget {
 
 class _ListaFilmesScreenState extends State<ListaFilmesScreen> {
   late Future<List<Filme>> filmesFuture;
-
+// Inicializa a lista de filmes ao carregar a tela
   @override
   void initState() {
     super.initState();
     _atualizarFilmes();
   }
-
+  // Atualiza a lista de filmes buscando todos os registros no banco de dados
   void _atualizarFilmes() {
     setState(() {
       filmesFuture = FilmeDao.buscarTodos();
     });
   }
-
+// Navega para a tela de cadastro/edição de filmes
   void _navegarParaCadastro({Filme? filme}) async {
     final resultado = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => CadastroFilmeScreen(filme: filme),
+        builder: (_) => CadastroFilmeScreen(filme: filme), // Passa o filme se for edição
       ),
     );
-
+// Passa o filme se for edição
     if (resultado == true) {
       _atualizarFilmes();
     }
@@ -60,8 +60,8 @@ class _ListaFilmesScreenState extends State<ListaFilmesScreen> {
                 color: Colors.white,
               ),
             ),
+            // Exibe um diálogo com informações sobre a equipe
             onPressed: () {
-              // Exibe um alerta com a mensagem de informação
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -70,14 +70,13 @@ class _ListaFilmesScreenState extends State<ListaFilmesScreen> {
                     content: const Text(
                         'Débora Silva Oliveira\nThamires Gabriela Rosa da Silveira'),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0), // Borda quadrada
+                      borderRadius: BorderRadius.circular(0),
                     ),
                     backgroundColor: Colors.white,
-                    // Fundo branco
                     actions: <Widget>[
                       TextButton(
                         style: TextButton.styleFrom(
-                          foregroundColor: Colors.blue, // Cor azul do texto
+                          foregroundColor: Colors.blue,
                         ),
                         child: const Text('OK'),
                         onPressed: () {
@@ -98,10 +97,10 @@ class _ListaFilmesScreenState extends State<ListaFilmesScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
+
           if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Center(child: Text('Nenhum filme cadastrado.'));
           }
-
           final filmes = snapshot.data!;
           return ListView.builder(
             itemCount: filmes.length,
@@ -112,8 +111,8 @@ class _ListaFilmesScreenState extends State<ListaFilmesScreen> {
                 direction: DismissDirection.endToStart,
                 // Deslize para a esquerda
                 onDismissed: (direction) async {
-                  await FilmeDao.deletar(filme.id!);
-                  _atualizarFilmes();
+                  await FilmeDao.deletar(filme.id!);  // Deleta o filme do banco de dados
+                  _atualizarFilmes(); //atualiza lista após deletar
                 },
                 background: Container(
                   color: Colors.red,
@@ -125,7 +124,7 @@ class _ListaFilmesScreenState extends State<ListaFilmesScreen> {
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius
-                        .zero, // Remove os arredondamentos
+                        .zero,
                   ),
                   elevation: 4,
                   margin: const EdgeInsets.all(8.0),
@@ -148,7 +147,6 @@ class _ListaFilmesScreenState extends State<ListaFilmesScreen> {
                           )
                               : const Icon(Icons.movie, size: 80),
                           const SizedBox(width: 24),
-                          // Aumenta o espaço à direita da imagem
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +169,6 @@ class _ListaFilmesScreenState extends State<ListaFilmesScreen> {
                                       fontSize: 14, color: Colors.grey),
                                 ),
                                 const SizedBox(height: 24),
-                                // Aumente esse valor para mais espaço
                                 RatingBarIndicator(
                                   rating: filme.pontuacao.toDouble(),
                                   itemBuilder: (context, _) =>
@@ -194,19 +191,16 @@ class _ListaFilmesScreenState extends State<ListaFilmesScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _navegarParaCadastro(),
+        onPressed: () => _navegarParaCadastro(), //navegar para cadastro
         backgroundColor: Colors.blue,
-        // Cor de fundo azul
         shape: const CircleBorder(),
-        // Garante que o botão seja completamente redondo
         child: const Icon(Icons.add, color: Colors.white),
-        // Ícone branco
-        elevation: 6.0, // Um pouco de sombra para dar destaque
+        elevation: 6.0,
       ),
     );
   }
 
-  // Função para exibir o menu no fundo da tela
+  //  exibir o menu no fundo da tela
   void _showPopupMenu(BuildContext context, Filme filme) async {
     showModalBottomSheet(
       context: context,

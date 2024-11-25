@@ -77,11 +77,13 @@ class _CadastroFilmeScreenState extends State<CadastroFilmeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
+          // Associa o formulário à chave.
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                //campos reutilizaveis
                 _buildTextField(
                     'URL da Imagem', _urlImagemController, TextInputType.url),
                 const SizedBox(height: 16),
@@ -151,6 +153,7 @@ class _CadastroFilmeScreenState extends State<CadastroFilmeScreen> {
           ),
         ),
         validator: (value) {
+          // Valida se o campo está vazio.
           if (value == null || value.isEmpty) {
             return 'O campo $label é obrigatório!';
           }
@@ -159,7 +162,7 @@ class _CadastroFilmeScreenState extends State<CadastroFilmeScreen> {
       ),
     );
   }
-
+// construindo o select de feixa etaria
   Widget _buildDropDown() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -201,7 +204,7 @@ class _CadastroFilmeScreenState extends State<CadastroFilmeScreen> {
       ],
     );
   }
-
+// pontuação estrelas
   Widget _buildSmoothStarRating() {
     return Row(
       children: [

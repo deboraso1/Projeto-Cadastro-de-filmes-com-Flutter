@@ -6,17 +6,16 @@ class DetalhesFilmeScreen extends StatelessWidget {
   final Filme filme;
 
   const DetalhesFilmeScreen({Key? key, required this.filme}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Remove a seta padrão
+        automaticallyImplyLeading: false,
         title: const Text(
           'Detalhes',
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.bold, // Deixa o texto em negrito
+            fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
         ),
@@ -27,7 +26,6 @@ class DetalhesFilmeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Exibição da imagem
             Center(
               child: filme.urlImagem.isNotEmpty
                   ? Image.network(
@@ -38,7 +36,6 @@ class DetalhesFilmeScreen extends StatelessWidget {
                   : const Icon(Icons.movie, size: 80),
             ),
             const SizedBox(height: 16),
-            // Título e Ano
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -58,7 +55,6 @@ class DetalhesFilmeScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            // Gênero e Faixa Etária
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -73,7 +69,6 @@ class DetalhesFilmeScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            // Duração e Estrelas
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -107,8 +102,6 @@ class DetalhesFilmeScreen extends StatelessWidget {
       ),
     );
   }
-
-  // Método para formatar faixa etária
   String _formatarFaixaEtaria(String faixaEtaria) {
     if (faixaEtaria.toLowerCase() == 'livre') {
       return 'Livre';

@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'filme_connection.dart';
 import '../model/filme.dart';
-
+// operações do DB
 class FilmeDao {
   static Future<int> inserir(Filme filme) async {
     Database db = await FilmeConnection.getConnection();
